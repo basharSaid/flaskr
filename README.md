@@ -11,7 +11,7 @@ pip install Flask
 2 - Install & Run Flaskr
 
 ```
-git clone https://github.com/silshack/flaskr.git
+git clone https://github.com/basharSaid/flaskr.git
 cd flaskr
 python flaskr.py
 ```
