@@ -13,7 +13,7 @@ pip install Flask
 ```
 git clone https://github.com/basharSaid/flaskr.git
 cd flaskr
-python flaskr.py
+python app.py
 ```
 
 3 - Log in
@@ -21,7 +21,7 @@ python flaskr.py
 Username: admin
 Password: default
 
-And/or edit these variables in `flaskr.py`.
+And/or edit these variables in `app.py`.
 
 4 - Hackity Hack
 
