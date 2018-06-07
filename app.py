@@ -2,46 +2,43 @@
 """
     Flaskr
     ~~~~~~
-
     A microblog example application written as Flask tutorial with
     Flask and sqlite3.
-
     :copyright: (c) 2018 by Bashar Said.
 """
 
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
-     render_template, flash
-
+    render_template, flash
 
 # create our little application
-app = Flask(__name__)
+APP = Flask(__name__)
 
 # Load default config and override config from an environment variable
-app.config.update(dict(
+APP.config.update(dict(
     DATABASE='/tmp/flaskr.db',
     DEBUG=True,
     SECRET_KEY='development key',
     USERNAME='admin',
     PASSWORD='default'
 ))
-app.config.from_envvar('FLASKR_SETTINGS', silent=True)
+APP.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 
 def connect_db():
     """Connects to the specific database."""
-    rv = sqlite3.connect(app.config['DATABASE'])
-    rv.row_factory = sqlite3.Row
-    return rv
+    r_value = sqlite3.connect(APP.config['DATABASE'])
+    r_value.row_factory = sqlite3.Row
+    return r_value
 
 
 def init_db():
     """Creates the database tables."""
-    with app.app_context():
-        db = get_db()
-        with app.open_resource('schema.sql', mode='r') as f:
-            db.cursor().executescript(f.read())
-        db.commit()
+    with APP.app_context():
+        d_base = get_db()
+        with APP.open_resource('schema.sql', mode='r') as file:
+            d_base.cursor().executescript(file.read())
+        d_base.commit()
 
 
 def get_db():
@@ -53,40 +50,43 @@ def get_db():
     return g.sqlite_db
 
 
-@app.teardown_appcontext
-def close_db(error):
+@APP.teardown_appcontext
+def close_db(error):  # pylint: disable=unused-argument
     """Closes the database again at the end of the request."""
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
 
-@app.route('/')
+@APP.route('/')
 def show_entries():
-    db = get_db()
-    cur = db.execute('select title, text from entries order by id desc')
+    # pylint: disable=missing-docstring
+    d_base = get_db()
+    cur = d_base.execute('select title, text from entries order by id desc')
     entries = cur.fetchall()
     return render_template('show_entries.html', entries=entries)
 
 
-@app.route('/add', methods=['POST'])
+@APP.route('/add', methods=['POST'])
 def add_entry():
+    # pylint: disable=missing-docstring
     if not session.get('logged_in'):
         abort(401)
-    db = get_db()
-    db.execute('insert into entries (title, text) values (?, ?)',
-                 [request.form['title'], request.form['text']])
-    db.commit()
+    d_base = get_db()
+    d_base.execute('insert into entries (title, text) values (?, ?)',
+                   [request.form['title'], request.form['text']])
+    d_base.commit()
     flash('New entry was successfully posted')
     return redirect(url_for('show_entries'))
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@APP.route('/login', methods=['GET', 'POST'])
 def login():
+    # pylint: disable=missing-docstring
     error = None
     if request.method == 'POST':
-        if request.form['username'] != app.config['USERNAME']:
+        if request.form['username'] != APP.config['USERNAME']:
             error = 'Invalid username'
-        elif request.form['password'] != app.config['PASSWORD']:
+        elif request.form['password'] != APP.config['PASSWORD']:
             error = 'Invalid password'
         else:
             session['logged_in'] = True
@@ -95,17 +95,20 @@ def login():
     return render_template('login.html', error=error)
 
 
-@app.route('/logout')
+@APP.route('/logout')
 def logout():
+    # pylint: disable=missing-docstring
     session.pop('logged_in', None)
     flash('You were logged out')
     return redirect(url_for('show_entries'))
 
-@app.route('/about')
+
+@APP.route('/about')
 def about():
+    # pylint: disable=missing-docstring
     return render_template('about.html')
 
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True, host = '0.0.0.0', port = 8080)
+    APP.run(debug=True, host='0.0.0.0', port=8080)
