@@ -1,5 +1,7 @@
 Code for the Flaskr blogging platform, an example written with [Flask](http://flask.pocoo.org/) by Bashar Said
 
+[![Build Status](https://travis-ci.org/basharSaid/flaskr.png)](https://travis-ci.org/basharSaid/flaskr)
+
 ## Instructions
 
 1 - Install Flask
