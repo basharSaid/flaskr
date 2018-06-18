@@ -6,11 +6,6 @@
 __pycache__/
 
 
-# packaging
-/hatchbuck.egg-info/
-/dist/
-/build/
-
 # testing
 /.cache/
 /pytestdebug.log
