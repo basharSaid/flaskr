@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
     Flaskr Tests
     ~~~~~~~~~~~~
@@ -11,8 +10,10 @@ import tempfile
 import app
 
 
-class FlaskrTestCase(unittest.TestCase):  # pylint: disable=missing-docstring
-
+class FlaskrTestCase(unittest.TestCase):
+    """
+    This class tests all functions in the app.py
+    """
     def setUp(self):
         """Before each test, set up a blank database"""
         self.db_fd, app.APP.config['DATABASE'] = tempfile.mkstemp()
@@ -26,14 +27,20 @@ class FlaskrTestCase(unittest.TestCase):  # pylint: disable=missing-docstring
         os.unlink(app.APP.config['DATABASE'])
 
     def login(self, username, password):
-        # pylint: disable=missing-docstring
+        """
+        :param username: Username entered by login function
+        :param password: Password entered by login function
+        :return: Dictionary of values Username and Password
+        """
         return self.app.post('/login', data=dict(
             username=username,
             password=password
         ), follow_redirects=True)
 
     def logout(self):
-        # pylint: disable=missing-docstring
+        """
+        :return:
+        """
         return self.app.get('/logout', follow_redirects=True)
 
     # testing functions

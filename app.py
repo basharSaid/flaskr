@@ -42,8 +42,10 @@ def init_db():
 
 
 def get_db():
-    """Opens a new database connection if there is none yet for the
+    """
+    Opens a new database connection if there is none yet for the
     current application context.
+    :return:
     """
     if not hasattr(g, 'sqlite_db'):
         g.sqlite_db = connect_db()
@@ -51,15 +53,20 @@ def get_db():
 
 
 @APP.teardown_appcontext
-def close_db(error):  # pylint: disable=unused-argument
-    """Closes the database again at the end of the request."""
+def close_db():
+    """
+    Closes the database again at the end of the request.
+    :return:
+    """
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
 
 @APP.route('/')
 def show_entries():
-    # pylint: disable=missing-docstring
+    """
+    :return:
+    """
     d_base = get_db()
     cur = d_base.execute('select title, text from entries order by id desc')
     entries = cur.fetchall()
@@ -68,7 +75,9 @@ def show_entries():
 
 @APP.route('/add', methods=['POST'])
 def add_entry():
-    # pylint: disable=missing-docstring
+    """
+    :return:
+    """
     if not session.get('logged_in'):
         abort(401)
     d_base = get_db()
@@ -81,7 +90,9 @@ def add_entry():
 
 @APP.route('/login', methods=['GET', 'POST'])
 def login():
-    # pylint: disable=missing-docstring
+    """
+    :return:
+    """
     error = None
     if request.method == 'POST':
         if request.form['username'] != APP.config['USERNAME']:
@@ -97,7 +108,9 @@ def login():
 
 @APP.route('/logout')
 def logout():
-    # pylint: disable=missing-docstring
+    """
+    :return:
+    """
     session.pop('logged_in', None)
     flash('You were logged out')
     return redirect(url_for('show_entries'))
@@ -105,7 +118,9 @@ def logout():
 
 @APP.route('/about')
 def about():
-    # pylint: disable=missing-docstring
+    """
+    :return:
+    """
     return render_template('about.html')
 
 
