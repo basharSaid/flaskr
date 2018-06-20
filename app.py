@@ -53,7 +53,7 @@ def get_db():
 
 
 @APP.teardown_appcontext
-def close_db(error):
+def close_db(error):  # pylint: disable=unused-argument
     """
     Closes the database again at the end of the request.
     :return:
