@@ -1,13 +1,14 @@
 # IDEs & editors
+/.DS_Store/
 /.idea/
-
+/.gitignore/
 # cache
 *.py[cod]
-__pycache__/
 
 
 # testing
 /.cache/
+__pycache__/
 /pytestdebug.log
 /.pytest_cache/
 /.tox/
