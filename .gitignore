@@ -1,14 +1,6 @@
+# IDEs & editors
 /.idea/
 
-__pycache__/
-*.pyc
-/.pytest_cache/
-
-/venv/
-/*.egg-info/
-
-/.env
-
-/.vdirsyncer/
+# testing
 /.pytest_cache/
 /.tox/
