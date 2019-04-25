@@ -27,6 +27,7 @@ And/or edit these variables in `app.py`.
 
 4 - Hackity Hack
 
+
 In general:
 * Edit `templates/layout.html` to change the way the site's pages look
 * Add routes (pages) by editing `flaskr.py` and adding the appropriate templates
